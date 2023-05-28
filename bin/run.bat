@@ -1,0 +1,1 @@
+.\\dist\\windows_amd64\\discord-qqmusic-rpc.exe
