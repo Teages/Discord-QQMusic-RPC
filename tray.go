@@ -13,7 +13,7 @@ import (
 
 var (
 	appName    = "Discord QQMusic RPC"
-	appVersion = "v3.0.0"
+	appVersion = "v1.0.1"
 )
 
 func initTray(onReady func(), onExit func()) {
