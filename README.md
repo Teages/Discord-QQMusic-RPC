@@ -11,6 +11,10 @@ Show what QQ Music playing in Discord
 
 ![](https://api.onedrive.com/v1.0/shares/s!ApQYwhp06vplh9gwECGtf1_DvSo4Pw/root/content)
 
+# TODO
+
+- [ ] a whitelist of program to avoid state conflicts
+
 # Thanks 
 
 [Kxnrl/NetEase-Cloud-Music-DiscordRPC](https://github.com/Kxnrl/NetEase-Cloud-Music-DiscordRPC)
