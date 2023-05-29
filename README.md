@@ -9,7 +9,7 @@ Show what QQ Music playing in Discord
 
 # Screenshot
 
-![](https://api.onedrive.com/v1.0/shares/s!ApQYwhp06vplh9gwECGtf1_DvSo4Pw/root/content)
+![](https://api.onedrive.com/v1.0/shares/s!ApQYwhp06vplh9hKhqUF59oivEglOQ/root/content)
 
 # TODO
 
