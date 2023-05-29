@@ -1,6 +1,9 @@
 package main
 
 import (
+	"crypto/md5"
+	"encoding/binary"
+	"strconv"
 	"strings"
 	"time"
 
@@ -14,13 +17,13 @@ func main() {
 			time.Sleep(time.Second * 1)
 			str := findQQMusic()
 			if str == "" {
-				updateRPC("", "")
+				updateRPC("", "", 0)
 			} else {
 				sp := strings.SplitN(str, "-", 2)
 				if len(sp) == 2 {
-					updateRPC(sp[0], sp[1])
+					updateRPC(sp[0], sp[1], getCD(str))
 				} else {
-					updateRPC("", "")
+					updateRPC("", "", 0)
 				}
 			}
 		}
@@ -38,7 +41,7 @@ func findQQMusic() string {
 	return GetDesktopWindowName("QQMusic_Daemon_Wnd")
 }
 
-func initDiscordRPC(discordAppId string) func(string, string) {
+func initDiscordRPC(discordAppId string) func(string, string, int) {
 	title := ""
 	artist := ""
 
@@ -49,10 +52,12 @@ func initDiscordRPC(discordAppId string) func(string, string) {
 
 	isLogin := true
 
-	update := func(newTitle, newArtist string) {
+	update := func(newTitle, newArtist string, cd int) {
 		if newTitle != title || newArtist != artist {
 			title = newTitle
 			artist = newArtist
+			cdId := "cd_icon_" + strconv.Itoa(cd)
+			println(cdId)
 
 			if title == "" && isLogin {
 				client.Logout()
@@ -67,10 +72,10 @@ func initDiscordRPC(discordAppId string) func(string, string) {
 			client.SetActivity(client.Activity{
 				State:      artist,
 				Details:    title,
-				LargeImage: "qqmusic",
+				LargeImage: cdId,
 				LargeText:  "",
-				SmallImage: "",
-				SmallText:  "",
+				SmallImage: "qqmusic",
+				SmallText:  "Listening QQ Music",
 				Party:      nil,
 				Timestamps: &client.Timestamps{
 					Start: &now,
@@ -80,4 +85,12 @@ func initDiscordRPC(discordAppId string) func(string, string) {
 		}
 	}
 	return update
+}
+
+func getCD(str string) int {
+	size := 16
+	hasher := md5.New()
+	hasher.Write([]byte(str))
+	hash := hasher.Sum(nil)
+	return int(binary.BigEndian.Uint64((hash)) % uint64(size))
 }
